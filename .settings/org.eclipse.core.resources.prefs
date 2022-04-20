@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java/shoesstore/entities/Category.java=UTF-8
+encoding//src/main/java/shoesstore/entities/FeedBack.java=UTF-8
+encoding//src/main/java/shoesstore/entities/Import.java=UTF-8
+encoding//src/main/java/shoesstore/entities/Invoice.java=UTF-8
+encoding//src/main/java/shoesstore/entities/OrderDetails.java=UTF-8
+encoding//src/main/java/shoesstore/entities/User.java=UTF-8
+encoding//src/main/resources/hibernate.properties=ISO-8859-1
+encoding//src/main/resources/jdbc.properties=ISO-8859-1
+encoding//src/main/resources/log4j.properties=ISO-8859-1
+encoding//src/main/webapp/WEB-INF/views/invoice/invoice-list.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/layout/menu.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/login/singin.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/statistical/list_statistical.jsp=UTF-8

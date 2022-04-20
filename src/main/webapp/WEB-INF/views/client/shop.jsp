@@ -1,0 +1,265 @@
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<div id="message" data-message="${message}"></div>
+ <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
+
+            <div class="col-lg-3">
+                <h1 class="h2 pb-4">Thể loại</h1>
+                <ul class="list-unstyled templatemo-accordion">
+                	<c:forEach var="category" items="${categories}" varStatus="loop">
+                			<c:choose>
+                				<c:when test="${category.id== id}">
+                					
+									      <a class="pb-3 collapsed d-flex justify-content-between h3 text-decoration-none text-danger" href="<c:url value="/shop/${category.id }" />">
+					                            ${category.name }
+					                        </a>
+
+							    </c:when>    
+							    <c:otherwise>
+							         <a class="pb-3 collapsed d-flex justify-content-between h3 text-decoration-none active" href="<c:url value="/shop/${category.id }" />">
+			                            ${category.name }
+			                        </a>
+							    </c:otherwise>
+                			</c:choose>
+		                       
+	                      	
+	               
+                	</c:forEach>
+                </ul>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-6">
+              
+                    </div>
+                    <div class="col-md-6 pb-4">
+                        <div class="d-flex">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <!--   vong lap for  -->
+                    <c:forEach var="product" items="${list}" varStatus="loop">
+		        		<div class="col-md-4" >
+                        <div class="card mb-4 product-wap rounded-0" >
+                            <div class="card rounded-0">
+                 				<img width="250px" height="250px"  src="data:image/jpeg;base64,${product.image}">
+                                <div  data-id="${product.id}"  class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li> <button class="btn btn-success text-white like" ><i class="far fa-heart"></i></button></li>
+                                        <li> <button class="btn btn-success text-white mt-2 detail" ><i class="far fa-eye"></i></button></li>
+                                        <li> <button  class="btn btn-success text-white mt-2 add-to-card" ><i class="fas fa-cart-plus"></i></button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body" data-find="${product.id }">
+                                <ul class="list-inline pb-3">
+                                        	<li class="list-inline-item">Size :
+                                                <input type="hidden" name="product-size" id="product-size" value="S">
+                                            </li>
+                                        	<c:forEach var="detailProduct" items="${product.getImports()}" varStatus="loop">
+                                        		<label class="form-check-label list-inline-item">
+											    	<input type="radio" class="form-check-input product-size" name="size" value="${detailProduct.getSize() }">${detailProduct.getSize() }
+											  </label>
+		                                		
+		                                	</c:forEach>
+                                 </ul>
+                                <ul class="list-inline pb-3">
+                                    <li class="list-inline-item">Color:
+                                	<c:forEach var="detailProduct" items="${product.getImports()}" varStatus="loop">
+                                		<span class="text-muted">
+                                			<input type="radio" class="form-check-input product-color" name="color" value="${detailProduct.getColor()}">${detailProduct.getColor()}
+                                	  </span>
+                                	</c:forEach>
+                                </li>
+                                </ul>
+                                <p class="text-center mb-0"><fmt:setLocale value="vn"/><fmt:formatNumber value="${product.price }"/> VNĐ</p>
+                            </div>
+                        </div>
+                    </div>
+        			</c:forEach>
+                   <!-- end for -->
+                </div>
+                <div class="row">
+                    <ul class="pagination pagination-lg justify-content-end">
+                    	<c:forEach var = "i" begin = "1" end ="${paging.getTotalPages() }">
+					         <c:choose>
+							    <c:when test="${paging.indexPage== i}">
+								     <li class="page-item disabled">
+			                            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="<c:url value="/shop/list/${i }" />">${i }</a>
+			                        </li>
+							    </c:when>    
+							    <c:otherwise>
+							        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="<c:url value="/shop/list/${i }" />">${i }</a>
+							    </c:otherwise>
+							</c:choose>
+					         
+					      </c:forEach>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->
+
+    <!-- Start Brands -->
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Our Brands</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <div class="col-lg-9 m-auto tempaltemo-carousel">
+                    <div class="row d-flex flex-row">
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-light fas fa-chevron-left"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+
+                        <!--Carousel Wrapper-->
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+                                <!--Slides-->
+                                <div class="carousel-inner product-links-wap" role="listbox">
+
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_01.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_02.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_03.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_04.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End First slide-->
+
+                                    <!--Second slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_01.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_02.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_03.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_04.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Second slide-->
+
+                                    <!--Third slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_01.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_02.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_03.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="<c:url value="resources/assets/img/brand_04.png" />" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Third slide-->
+
+                                </div>
+                                <!--End Slides-->
+                            </div>
+                        </div>
+                        <!--End Carousel Wrapper-->
+
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-light fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Brands-->
+<script type="text/javascript">
+if($("#message").attr("data-message") != ""){
+	alert($("#message").attr("data-message"));
+	sessionStorage.clear();
+	$("#message").attr("data-message","")
+}
+$(document).ready(function(){
+	 $(".add-to-card").click(function(){
+		 var id = $(this).closest("div").attr("data-id"); 
+		 var color =  $("div[data-find]").find("input[name='color']:checked").val();
+		 var size =  $("div[data-find]").find("input[name='size']:checked").val();
+		 var url = "/shoes_store/card/add/"+id+"/size/"+size+"/color/"+color;
+		 $.ajax({
+				url:url,
+				type: "GET",
+				success: function( response ){
+					$("#amt").html(response[1]);
+					$("#cnt").html(response[0]);
+					alert("Đã thêm vào giỏ hàng");
+				}
+		});
+	 });
+	 $(".detail").click(function(){
+		 var id = $(this).closest("div").attr("data-id"); 
+		 var url = "/shoes_store/detail/"+id;
+		 top.location.href=url;
+	 });
+	 
+});
+</script>
